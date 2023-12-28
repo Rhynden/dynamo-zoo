@@ -1,4 +1,5 @@
 resource "aws_acm_certificate" "acm_certificate" {
+  provider                  = aws.us-east-1
   domain_name               = var.domain_name
   subject_alternative_names = var.alternative_domain_names
   validation_method         = "DNS"
@@ -22,6 +23,7 @@ resource "aws_route53_record" "records" {
 }
 
 resource "aws_acm_certificate_validation" "acm_certificate_validation" {
+  provider                = aws.us-east-1
   certificate_arn         = aws_acm_certificate.acm_certificate.arn
   validation_record_fqdns = [for record in aws_route53_record.records : record.fqdn]
 }
