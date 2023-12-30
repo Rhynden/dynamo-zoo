@@ -6,6 +6,10 @@ terraform {
       source  = "hashicorp/aws"
       version = "~> 5.0"
     }
+    archive = {
+      source  = "hashicorp/archive"
+      version = "2.4.1"
+    }
   }
 
   # Optionally store tf state in aws s3 bucket
