@@ -3,6 +3,11 @@ variable "domain_name" {
   type        = string
 }
 
+variable "api_domain_name" {
+  description = "API domain name of the website"
+  type        = string
+}
+
 variable "alternative_domain_names" {
   description = "Alternative domain names of the website"
   type        = list(string)
