@@ -4,13 +4,13 @@ resource "aws_dynamodb_table" "s3_imagepath_table" {
   name         = var.table_name
   billing_mode = var.table_billing_mode
   hash_key     = "animal_name"
-  range_key    = "image_uri"
+  range_key    = "s3_object_key"
   attribute {
     name = "animal_name"
     type = "S"
   }
   attribute {
-    name = "image_uri"
+    name = "s3_object_key"
     type = "S"
   }
   tags = {
@@ -27,7 +27,7 @@ resource "aws_dynamodb_table_item" "dog1" {
   item = <<ITEM
 {
   "animal_name": {"S": "dog"},
-  "image_uri": {"S": "s3://${aws_s3_bucket.images_bucket.id}/dogs/dog1"}
+  "s3_object_key": {"S": "${aws_s3_object.dog1.id}"}
 }
 ITEM
 }
@@ -40,7 +40,7 @@ resource "aws_dynamodb_table_item" "dog2" {
   item = <<ITEM
 {
   "animal_name": {"S": "dog"},
-  "image_uri": {"S": "s3://${aws_s3_bucket.images_bucket.id}/dogs/dog2"}
+  "s3_object_key": {"S": "${aws_s3_object.dog2.id}"}
 }
 ITEM
 }
@@ -53,7 +53,7 @@ resource "aws_dynamodb_table_item" "cat1" {
   item = <<ITEM
 {
   "animal_name": {"S": "cat"},
-  "image_uri": {"S": "s3://${aws_s3_bucket.images_bucket.id}/cats/cat1"}
+  "s3_object_key": {"S": "${aws_s3_object.cat1.id}"}
 }
 ITEM
 }
@@ -66,7 +66,7 @@ resource "aws_dynamodb_table_item" "cat2" {
   item = <<ITEM
 {
   "animal_name": {"S": "cat"},
-  "image_uri": {"S": "s3://${aws_s3_bucket.images_bucket.id}/cats/cat2"}
+  "s3_object_key": {"S": "${aws_s3_object.cat2.id}"}
 }
 ITEM
 }
@@ -79,7 +79,7 @@ resource "aws_dynamodb_table_item" "bird1" {
   item = <<ITEM
 {
   "animal_name": {"S": "bird"},
-  "image_uri": {"S": "s3://${aws_s3_bucket.images_bucket.id}/birds/bird1"}
+  "s3_object_key": {"S": "${aws_s3_object.bird1.id}"}
 }
 ITEM
 }
@@ -92,7 +92,7 @@ resource "aws_dynamodb_table_item" "birds2" {
   item = <<ITEM
 {
   "animal_name": {"S": "bird"},
-  "image_uri": {"S": "s3://${aws_s3_bucket.images_bucket.id}/birds/bird1"}
+  "s3_object_key": {"S": "${aws_s3_object.bird2.id}"}
 }
 ITEM
 }
