@@ -1,6 +1,10 @@
 import { DynamoDB } from '@aws-sdk/client-dynamodb';
 import { DynamoDBDocument } from '@aws-sdk/lib-dynamodb';
+import { S3Client, GetObjectCommand } from "@aws-sdk/client-s3";
+import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 
+
+const client = new S3Client();
 const dynamo = DynamoDBDocument.from(new DynamoDB());
 
 console.log('Loading function');
@@ -23,14 +27,27 @@ export const handler = async (event, context) => {
             //     body = await dynamo.delete(JSON.parse(event.body));
             //     break;
             case 'GET':
-                const params = {
+                const queryParams = {
                     KeyConditionExpression : "animal_name = :dog",
                     ExpressionAttributeValues: {
                         ':dog': "dog"
                     },
-                    TableName: "animals"
+                    TableName: "animals",
+                    ProjectionExpression: 's3_object_key'
                 }
-                body = await dynamo.query(params);
+                const { Items } = await dynamo.query(queryParams);
+
+                const randomIndex  = Math.floor(Math.random() * Items.length);
+
+                const randomItem = Items[randomIndex];
+
+                const command = new GetObjectCommand({Bucket: "fb-dynamozoo-image-bucket" , Key: randomItem.s3_object_key });
+
+                // Expire after 1 minute
+                const url = await getSignedUrl(client, command, { expiresIn: 60 });
+
+                body = { s3_object_url: url };
+
                 break;
             // case 'POST':
             //     body = await dynamo.put(JSON.parse(event.body));

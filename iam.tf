@@ -40,6 +40,13 @@ resource "aws_iam_policy" "lambda_execution_policy" {
             "dynamodb:Query"
          ],
          "Resource":"${aws_dynamodb_table.s3_imagepath_table.arn}"
+      },
+      {
+         "Effect":"Allow",
+         "Action":[
+            "s3:GetObject"
+         ],
+         "Resource":"${aws_s3_bucket.images_bucket.arn}/*"
       }
    ]
 }
