@@ -13,6 +13,16 @@ variable "alternative_domain_names" {
   type        = list(string)
 }
 
+variable "s3_static_website_bucket_name" {
+  description = "Contains static website files (html, js, css)"
+  type        = string
+}
+
+variable "s3_images_bucket_name" {
+  description = "Contains images to be served/queried"
+  type        = string
+}
+
 variable "table_name" {
   description = "Dynamodb table name (space is not allowed)"
   default     = "animals"

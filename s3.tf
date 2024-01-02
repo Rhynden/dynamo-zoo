@@ -1,6 +1,10 @@
 // Bucket for the staitc website files
 resource "aws_s3_bucket" "static_website_bucket" {
-  bucket = "fb-dynamozoo-static-website-bucket"
+  bucket = var.s3_static_website_bucket_name
+}
+
+resource "aws_s3_bucket" "images_bucket" {
+  bucket = var.s3_images_bucket_name
 }
 
 resource "aws_s3_object" "index" {
