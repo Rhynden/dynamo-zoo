@@ -7,7 +7,7 @@ resource "aws_api_gateway_rest_api" "rest_api" {
 resource "aws_api_gateway_resource" "api_gateway_resource" {
   rest_api_id = aws_api_gateway_rest_api.rest_api.id
   parent_id   = aws_api_gateway_rest_api.rest_api.root_resource_id
-  path_part   = "my_rest_api"
+  path_part   = "animals"
 }
 
 resource "aws_api_gateway_method" "api_gateway_method" {
