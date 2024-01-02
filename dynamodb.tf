@@ -27,7 +27,7 @@ resource "aws_dynamodb_table_item" "dog1" {
   item = <<ITEM
 {
   "animal_name": {"S": "dog"},
-  "image_uri": {"S": "www.s3.de/dog1"}
+  "image_uri": {"S": "s3://${aws_s3_bucket.images_bucket.id}/dogs/dog1"}
 }
 ITEM
 }
@@ -40,7 +40,59 @@ resource "aws_dynamodb_table_item" "dog2" {
   item = <<ITEM
 {
   "animal_name": {"S": "dog"},
-  "image_uri": {"S": "www.s3.de/dog2"}
+  "image_uri": {"S": "s3://${aws_s3_bucket.images_bucket.id}/dogs/dog2"}
+}
+ITEM
+}
+
+resource "aws_dynamodb_table_item" "cat1" {
+  table_name = aws_dynamodb_table.s3_imagepath_table.name
+  hash_key   = aws_dynamodb_table.s3_imagepath_table.hash_key
+  range_key  = aws_dynamodb_table.s3_imagepath_table.range_key
+
+  item = <<ITEM
+{
+  "animal_name": {"S": "cat"},
+  "image_uri": {"S": "s3://${aws_s3_bucket.images_bucket.id}/cats/cat1"}
+}
+ITEM
+}
+
+resource "aws_dynamodb_table_item" "cat2" {
+  table_name = aws_dynamodb_table.s3_imagepath_table.name
+  hash_key   = aws_dynamodb_table.s3_imagepath_table.hash_key
+  range_key  = aws_dynamodb_table.s3_imagepath_table.range_key
+
+  item = <<ITEM
+{
+  "animal_name": {"S": "cat"},
+  "image_uri": {"S": "s3://${aws_s3_bucket.images_bucket.id}/cats/cat2"}
+}
+ITEM
+}
+
+resource "aws_dynamodb_table_item" "bird1" {
+  table_name = aws_dynamodb_table.s3_imagepath_table.name
+  hash_key   = aws_dynamodb_table.s3_imagepath_table.hash_key
+  range_key  = aws_dynamodb_table.s3_imagepath_table.range_key
+
+  item = <<ITEM
+{
+  "animal_name": {"S": "bird"},
+  "image_uri": {"S": "s3://${aws_s3_bucket.images_bucket.id}/birds/bird1"}
+}
+ITEM
+}
+
+resource "aws_dynamodb_table_item" "birds2" {
+  table_name = aws_dynamodb_table.s3_imagepath_table.name
+  hash_key   = aws_dynamodb_table.s3_imagepath_table.hash_key
+  range_key  = aws_dynamodb_table.s3_imagepath_table.range_key
+
+  item = <<ITEM
+{
+  "animal_name": {"S": "bird"},
+  "image_uri": {"S": "s3://${aws_s3_bucket.images_bucket.id}/birds/bird1"}
 }
 ITEM
 }
