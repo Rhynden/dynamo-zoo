@@ -23,44 +23,44 @@ resource "aws_s3_object" "error" {
 
 resource "aws_s3_object" "dog1" {
   bucket       = aws_s3_bucket.images_bucket.id
-  key          = "dog1"
+  key          = "dogs/dog1"
   source       = "./images/dogs/dog1.jpg"
-  content_type = "image/jpg"
+  content_type = "image/jpeg"
 }
 
 resource "aws_s3_object" "dog2" {
   bucket       = aws_s3_bucket.images_bucket.id
-  key          = "dog2"
+  key          = "dogs/dog2"
   source       = "./images/dogs/dog2.jpg"
-  content_type = "image/jpg"
+  content_type = "image/jpeg"
 }
 
 resource "aws_s3_object" "cat1" {
   bucket       = aws_s3_bucket.images_bucket.id
-  key          = "cat1"
+  key          = "cats/cat1"
   source       = "./images/cats/cat1.jpg"
-  content_type = "image/jpg"
+  content_type = "image/jpeg"
 }
 
 resource "aws_s3_object" "cat2" {
   bucket       = aws_s3_bucket.images_bucket.id
-  key          = "cat2"
+  key          = "cats/cat2"
   source       = "./images/cats/cat2.jpg"
-  content_type = "image/jpg"
+  content_type = "image/jpeg"
 }
 
 resource "aws_s3_object" "bird1" {
   bucket       = aws_s3_bucket.images_bucket.id
-  key          = "bird1"
+  key          = "birds/bird1"
   source       = "./images/birds/bird1.jpg"
-  content_type = "image/jpg"
+  content_type = "image/jpeg"
 }
 
 resource "aws_s3_object" "bird2" {
   bucket       = aws_s3_bucket.images_bucket.id
-  key          = "bird2"
+  key          = "birds/bird2"
   source       = "./images/birds/bird2.jpg"
-  content_type = "image/jpg"
+  content_type = "image/jpeg"
 }
 
 resource "aws_s3_bucket_policy" "s3_bucket_policy_cloudfront" {
