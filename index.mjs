@@ -27,6 +27,27 @@ export const handler = async (event, context) => {
             //     body = await dynamo.delete(JSON.parse(event.body));
             //     break;
             case 'GET':
+                const queryStringParams = event.queryStringParameters;
+
+                // Validate queryStringParams exists
+                if (queryStringParams == undefined || queryStringParams == null) {
+                    throw new Error(`Please specify an animal name via ?name=`);
+                }
+
+                // Validate queryStringParams contains name
+                if (!(queryStringParams?.name)) {
+                    throw new Error(`Unsupported queryStringParameter "${event.queryStringParams}". Please specify an animal name via ?name=`);
+                }
+                
+                // Validate the animal name
+                const { name: animal_name } = queryStringParams;
+                const validAnimalNames = ["cats", "dogs", "birds"]
+                
+                if (!(validAnimalNames.includes(animal_name))) {
+                    throw new Error(`Unsupported animal name "${animal_name}". Please specify any of ${JSON.stringify(validAnimalNames)}`);
+                }
+                // Passed all validations
+
                 const queryParams = {
                     KeyConditionExpression : "animal_name = :dog",
                     ExpressionAttributeValues: {
