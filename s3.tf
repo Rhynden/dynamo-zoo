@@ -21,6 +21,48 @@ resource "aws_s3_object" "error" {
   content_type = "text/html"
 }
 
+resource "aws_s3_object" "dog1" {
+  bucket       = aws_s3_bucket.images_bucket.id
+  key          = "dog1"
+  source       = "./images/dogs/dog1.jpg"
+  content_type = "image/jpg"
+}
+
+resource "aws_s3_object" "dog2" {
+  bucket       = aws_s3_bucket.images_bucket.id
+  key          = "dog2"
+  source       = "./images/dogs/dog2.jpg"
+  content_type = "image/jpg"
+}
+
+resource "aws_s3_object" "cat1" {
+  bucket       = aws_s3_bucket.images_bucket.id
+  key          = "cat1"
+  source       = "./images/cats/cat1.jpg"
+  content_type = "image/jpg"
+}
+
+resource "aws_s3_object" "cat2" {
+  bucket       = aws_s3_bucket.images_bucket.id
+  key          = "cat2"
+  source       = "./images/cats/cat2.jpg"
+  content_type = "image/jpg"
+}
+
+resource "aws_s3_object" "bird1" {
+  bucket       = aws_s3_bucket.images_bucket.id
+  key          = "bird1"
+  source       = "./images/birds/bird1.jpg"
+  content_type = "image/jpg"
+}
+
+resource "aws_s3_object" "bird2" {
+  bucket       = aws_s3_bucket.images_bucket.id
+  key          = "bird2"
+  source       = "./images/birds/bird2.jpg"
+  content_type = "image/jpg"
+}
+
 resource "aws_s3_bucket_policy" "s3_bucket_policy_cloudfront" {
   bucket = aws_s3_bucket.static_website_bucket.id
   policy = data.aws_iam_policy_document.iam_policy_document_allow_cloudfront.json
