@@ -33,6 +33,13 @@ resource "aws_iam_policy" "lambda_execution_policy" {
          "Resource":[
             "arn:aws:logs:*:*:*"
          ]
+      },
+      {
+         "Effect":"Allow",
+         "Action":[
+            "dynamodb:Query"
+         ],
+         "Resource":"${aws_dynamodb_table.s3_imagepath_table.arn}"
       }
    ]
 }
