@@ -49,9 +49,10 @@ export const handler = async (event, context) => {
                 // Passed all validations
 
                 const queryParams = {
-                    KeyConditionExpression : "animal_name = :dog",
+                    KeyConditionExpression : `animal_name = :animal_name`,
                     ExpressionAttributeValues: {
-                        ':dog': "dog"
+                        // Slice to remove the trailing s
+                        ':animal_name': `${animal_name.slice(0, -1)}`
                     },
                     TableName: "animals",
                     ProjectionExpression: 's3_object_key'
