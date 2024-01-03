@@ -13,7 +13,7 @@ resource "aws_cloudfront_distribution" "static_website_distribution" {
     origin_id                = local.s3_origin_id
   }
 
-  aliases = [var.domain_name]
+  aliases = [var.domain_name, var.www_domain_name]
 
   enabled             = true
   is_ipv6_enabled     = true
