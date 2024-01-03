@@ -16,8 +16,8 @@ resource "aws_s3_object" "index" {
 
 resource "aws_s3_object" "error" {
   bucket       = aws_s3_bucket.static_website_bucket.id
-  key          = "error.html"
-  source       = "error.html"
+  key          = "404.html"
+  source       = "404.html"
   content_type = "text/html"
 }
 
