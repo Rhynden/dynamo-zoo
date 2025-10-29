@@ -1,0 +1,92 @@
+Issues/TODOs
+Put everything not TF in separate folder "files" or similar
+templates folder for policies
+prefix terraform config files (locals, vars, providers etc) with "_"
+
+Hosted zone als datasource und records anlegen ✅
+VPC or no VPC?
+-> if serverless, no vpc. Does it incur costs or not? 
+Explore TF modules
+Store tf state in s3 "remote backend"
+-> should always be done in s3 (should have versioning, locks etc) and dynamodb ✅
+-> terraform state for terraform backend state can be migrated to the same bucket (migrate state?) ✅
+s3:
+    is it bad to have the bucket name exposed to the www? 
+    -> presigned url includes the bucketname, therefore exposes the bucketname
+    -> if your policies are set correctly, it shouldn't matter ✅
+Where to cache images of http request? ✅
+    -> API Gateway or cloudfront?
+    -> cloudfront ✅ 
+Do i need cors on s3 bucket (static website) when used with cloudfront?
+    // CORS config for cloudfront
+    resource "aws_s3_bucket_cors_configuration" "static_website_bucket_cors_configuration" {
+    bucket = aws_s3_bucket.static_website_bucket.id
+
+    cors_rule {
+        allowed_methods = ["GET"]
+        allowed_origins = ["*"]
+    }
+    }
+    https://repost.aws/knowledge-center/cloudfront-serve-static-website
+    -> seems like its not needed ✅
+how to conditionally import acm if exists and issue certificate otherwise? ✅
+-> in theory it shouldn't take long, so not so problematic, but probably easier to reuse
+
+what was the problem with using certificates for *.fboeck-trc.de? It was mentioned there might be more security issues
+-> do more research ✅
+
+split code into 3 separate "modules"? ✅
+    - static website
+    - infrastructure hosted zone
+    - REST api
+
+how to redirect from www. to root domain?  ✅
+    is an entry in route53 enough or should another bucket with a redirect be used (Status code 301 for SEO) vs cloudfront alternate domain?
+    -> probably second bucket 
+
+dynamodb: ✅
+    store image url or s3 object url?
+    -> doesn't matter, dynamodb not even required only if you want/need additional meta data
+
+Nice to haves:
+- log website traffic
+- how to forbid access to website via cloudfront url and only use custom doamain
+    -> lambda@edge 
+- log retrieved images (request count in dynamoDB?)
+- add cognito to verify users and retrieve HQ images instead of default resolution, optional download if authenticated
+- add DAX to dynamodb?
+
+
+
+
+Clarified/Done
+Add index.html to upload to s3 ✅
+How does using api gateway and cloudfront work in parallel with route53? ✅
+    -> Cloudfront for static website and api gateway for api 
+ACM for HTTPS ✅
+Where to cache static website? ✅
+-> Cloudfront 
+unclear when "depends on is required or not" - api gateway with http methods ✅
+    -> use triggers 
+Lambda function can only be invoked via POST - sus ✅
+lambda proxy function has to return a specific format ✅
+acm is regional, do i need two for api gateway and cloudfront? ✅
+-> cloudfront requires a certificate in us-east-1, if api gateway endpoint type is edge we can use the same; if regional we need a regional certificate 
+cloudfront is always us-east-1 ✅
+Seems wrong:
+  # aws_acm_certificate_validation.acm_certificate_validation will be created
+  + resource "aws_acm_certificate_validation" "acm_certificate_validation" {
+      + certificate_arn         = "arn:aws:acm:eu-central-1:678152600162:certificate/f0494a50-4ac3-4e33-9b06-0de8e2634412"
+      + id                      = (known after apply)
+      + validation_record_fqdns = [
+          + "_9b357df2d7ca15845e7dd706cae40e15.api.fboeck-trc.de",
+          + "_d0955bbecd365b4065ab4ad87ae64a3e.www.fboeck-trc.de",
+          + "_d910573334b75a6d5d3892edd36dd8f7.fboeck-trc.de",
+        ]
+    }
+    -> but is correct ✅
+https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/domain-replace-hosted-zone.html ✅
+https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/domain-name-servers-glue-records.html ✅
+How to propagate name servers of the registered/bought domain to route53? ✅
+    -> we need it the other way around, we need to propagate the nameservers from route53 hosted zone to where the domain is registered
+https://repost.aws/knowledge-center/cloudfront-serve-static-website ✅
